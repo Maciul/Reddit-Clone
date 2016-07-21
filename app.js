@@ -29,8 +29,29 @@ app.factory('factory', [
           date: new Date()
         }
       ];
+
+      function plusVote(posts) {
+        if(!posts.vote) {
+        posts.vote = 0;
+        posts.vote += 1;
+      } else {
+        posts.vote += 1;
+      }
+    }
+    function minusVote(posts) {
+      if(!posts.vote) {
+      posts.vote = 0;
+      posts.vote -= 1;
+    } else {
+      posts.vote -= 1;
+    }
+  }
+
       return {
-        posts: function() { return posts }
+        posts: function() { return posts },
+        plusVote: plusVote,
+        minusVote: minusVote
+
       };
     }
 ]);
@@ -40,5 +61,7 @@ app.controller("FirstControl", [
    function(f) {
      var main = this;
      main.posts = f.posts();
+     main.plusVote = f.plusVote;
+     main.minusVote = f.minusVote;
    }
  ]);

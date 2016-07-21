@@ -25,20 +25,27 @@
               <option > Votes </option>
               <option > Title </option>
             </select>
-
           </ul>
         </div>
       </div>
     </nav>
   </header>
+
+
+
   <div class='container'>
-      <div class="row rowFix" ng-repeat='post in (main.posts | filter:main.search)' >
+      <div class="row rowFix" ng-repeat='post in (main.posts | filter:main.search) track by post.id' >
         <div class='pull-left col-lg-3 col-md-3 col-sm-3'>
           <img ng-src="{{post.image}}" height='auto' width='100%' alt="Description" />
         </div>
         <div class='col-lg-9 col-md-9 col-sm-9' >
           <div class='row'>
-          <h3> {{post.title}} | </h3>
+          <h3> {{post.title}} |
+
+            <span ng-click='main.plusVote(post)' class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+            <span> {{post.vote}}
+            <span ng-click='main.minusVote(post)' class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+          </h3>
           <p class='pull-right'> {{post.author}} </p>
         </div>
         <div class='row'>
