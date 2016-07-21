@@ -27,6 +27,9 @@ app.factory('factory', [
           description: 'Lorem ipsum dolor sit amet, vero vocent principes id nec, et nemore accumsan rationibus eos, ne sed virtute utroque. Atqui quodsi laboramus eos ei, sit at sanctus nusquam. No vocent hendrerit mea, graeci interpretaris at cum. Et per elit graeci eloquentiam, ullum errem principes his ex. Corrumpit abhorreant in vix, an vero errem quo. Duo cu platonem gloriatur, vis primis viderer ad.'
         }
       ];
+      return {
+        posts: function() { return posts }
+      };
     }
 ]);
 
@@ -34,6 +37,6 @@ app.controller("FirstControl", [
    'factory',
    function(f) {
      var main = this;
-  
+     main.posts = f.posts();
    }
  ]);

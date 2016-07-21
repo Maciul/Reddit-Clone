@@ -31,7 +31,13 @@
     </nav>
   </header>
 
-  <div>
+  <div ng-controller='FirstControl as main'>
+    <div ng-repeat='post in main.posts'>
+    <h3>  {{post.title}} </h3>
+    <p> {{post.author}} </p>
+    <img ng-src="{{post.image}}" height='auto' width='25%' alt="Description" />
+    <p> {{post.description}}
+  </div>
   <div>
 
   <h1> Insanity Check </h1>
