@@ -12,3 +12,11 @@ body {
 option {
   color: #777;
 }
+
+h3 {
+  margin: 0px;
+}
+
+.rowFix {
+  margin: 5% 0;
+}
