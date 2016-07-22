@@ -39,7 +39,7 @@ h3 {
 .rowForm {
   width: 50%;
   margin-top: 3%;
-  background-color: aliceblue;
+  background-color: #d8dff0;
   padding: 15px;
   border-radius: 10px;
   border: 1px solid #9a9292;
@@ -50,6 +50,11 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+#brand {
+  color: #8b0000;
+  font-weight: bold;
 }
 
 .red {

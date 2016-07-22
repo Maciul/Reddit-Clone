@@ -55,7 +55,15 @@ app.factory('factory', [
     function minusVote(posts) {
       posts.vote -= 1;
     }
-
+    function toggleComment(post) {
+      post.addComment = false;
+      post.showComment = !post.showComment;
+      console.log(post.showComment);
+  }
+    function toggleCommentForm(post) {
+      post.showComment = false;
+      post.addComment = !post.addComment;
+    }
 
   function addNewPost(form) {
     console.log(form);
@@ -85,7 +93,9 @@ app.factory('factory', [
         plusVote: plusVote,
         minusVote: minusVote,
         addNewPost: addNewPost,
-        addNewComment: addNewComment
+        addNewComment: addNewComment,
+        toggleComment: toggleComment,
+        toggleCommentForm: toggleCommentForm
       };
     }
 ]);
@@ -98,7 +108,20 @@ app.controller("FirstControl", [
      main.choices = f.choices();
      main.plusVote = f.plusVote;
      main.minusVote = f.minusVote;
-     main.addNewPost = f.addNewPost;
-     main.addNewComment = f.addNewComment;
+     main.toggleComment = f.toggleComment;
+     main.toggleCommentForm = f.toggleCommentForm;
+
+     main.addNewPost = function(form) {
+       f.addNewPost(form);
+       form.title = '';
+       form.image = '';
+       form.author = '';
+       form.description = '';
+};
+     main.addNewComment = function(form, post) {
+       f.addNewComment(form, post);
+       form.comment = '';
+       form.user = '';
+     };
    }
  ]);

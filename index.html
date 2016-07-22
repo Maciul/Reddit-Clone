@@ -1,21 +1,22 @@
 <html ng-app="App">
 <head>
-  <title> {{greeting}} World </title>
+  <title> AngularJS Reddit Clone</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js'></script>
   <script src='app.js'></script>
 </head>
 <body ng-controller='FirstControl as main'>
 
-  <!-- NAVBAR  -->
+<!-- NAVBAR  -->
 
   <header>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div>
         <div class='navbar-header'>
-          <a class="navbar-brand" href="/">Reddit Clone</a>
+          <a id='brand' class="navbar-brand" href="index.html">Reddit Clone</a>
           <ul class="nav navbar-nav navbar-left">
             <li><a ng-click="addPost = !addPost" href="#">+ Submit Post</a></li>
             <form class="navbar-form navbar-left" role="search">
@@ -24,7 +25,7 @@
               </div>
             </form>
 
-  <!-- ORDERBY MODEL           -->
+<!-- ORDERBY MODEL           -->
 
             <select ng-model='myOrderBy'
                     ng-init='myOrderBy=main.choices[0].name'
@@ -42,9 +43,11 @@
 
 
   <!-- ADD POST FORM -->
+
+
   <div class='container'>
     <div ng-show='addPost' class='row rowForm'>
-      <form ng-submit='main.addNewPost(form)'>
+      <form novalidate name='addNewPost' ng-submit='main.addNewPost(form)'>
   <div class="form-group row">
     <label for="title" class="col-sm-2 form-control-label">Title</label>
     <div class="col-sm-10">
@@ -54,30 +57,30 @@
   <div class="form-group row">
     <label for="author" class="col-sm-2 form-control-label">Author</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="form.author" placeholder="your name">
+      <input type="text" class="form-control" ng-model="form.author" placeholder="your name" required>
     </div>
   </div>
   <div class="form-group row">
     <label for="title" class="col-sm-2 form-control-label">Description</label>
     <div class="col-sm-10">
-      <textarea style='color: #999' class="form-control" ng-model="form.description" rows="3">describe your experience</textarea>
+      <textarea style='color: #999' class="form-control" ng-model="form.description" rows="3" required>describe your experience</textarea>
     </div>
   </div>
       <div class="form-group row">
         <label for="image" class="col-sm-2 form-control-label">Image URL</label>
         <div class="col-sm-10">
-          <input type="url" class="form-control" ng-model="form.image" placeholder="image link">
+          <input type="url" class="form-control" ng-model="form.image" placeholder="image link" required>
         </div>
       </div>
   <div class="form-group row">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" value="Submit"class="btn btn-primary">Add new post</button>
+      <button ng-disabled='addNewPost.$invalid' ng-click='addPost = !addPost' type="submit" value="Submit"class="btn btn-primary">Add new post</button>
     </div>
   </div>
 </form>
 </div>
 
-  <!-- POSTS START HERE  -->
+<!-- POSTS REPEAT START HERE  -->
 
       <div class="row rowFix" ng-repeat='post in (main.posts | filter:main.search) | orderBy:myOrderBy' >
         <div class='pull-left col-lg-3 col-md-3 col-sm-3'>
@@ -91,36 +94,41 @@
             </h3>
             <p class='text-right'> {{post.author}} </p>
 
+<!-- CLICK FUNCTIONS FOR ADD AND SHOW COMMENTS -->
+
             <p> {{post.description}} </p>
             <p> <span class='glyphicon glyphicon-calendar'></span> {{post.date | date: 'fullDate'}} |
                 <span class='glyphicon glyphicon-comment'></span>
-                <a ng-click='showComments = !showComments'>
+                <a ng-click='main.toggleComment(post)'>
                 <ng-pluralize count="post.comments.length"
                  when="{'0': '0 Comments',
                         'one': '1 Comment.',
                         'other': '{} Comments.'}"></ng-pluralize>
                 </a>  |
-                <span class='glyphicon glyphicon-pencil'></span><a ng-click='addComment = !addComment'> Add Comment</a></p>
+                <span class='glyphicon glyphicon-pencil'></span><a ng-click='main.toggleCommentForm(post)'> Add Comment</a></p>
           </div>
 
-          <!-- ADD COMMENT HERE (HIDDEN) -->
+<!-- ADD COMMENT FORM (HIDDEN) -->
 
-          <div class='col-lg-8 col-lg-offset-2 comment' ng-show='addComment'>
-            {{post}}
-            <form ng-submit='main.addNewComment(form, post)' >
+
+          <div class='col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 comment' ng-show='post.addComment'>
+            <form name='addNewComment' ng-submit='main.addNewComment(form, post)' >
               <fieldset class="form-group">
                 <label for="comment">Comment</label>
-                <textarea ng-model='form.comment' rows='6' type="text" class="form-control"placeholder="Make it good"></textarea>
+                <textarea ng-model='form.comment' rows='6' type="text" class="form-control"placeholder="Make it good" required></textarea>
             </fieldset>
               <fieldset class="form-group">
                 <label for="author">Author</label>
-                <input ng-model='form.user' type="text" class="form-control" placeholder="Your Funny Name Here">
+                <input ng-model='form.user' type="text" class="form-control" placeholder="Your Funny Name Here" required>
               </fieldset>
-              <button ng-click='addComment = !addComment; showComments = !showComments' type='submit'> Add It! </button>
+              <button class='btn btn-primary' ng-disabled='addNewComment.$invalid' ng-click='addComment = !addComment; showComments = !showComments' type='submit'> Add It! </button>
             </form>
           </div>
+
+<!-- SHOW COMMENTS FOR EACH POST (HIDDEN) -->
+
           <div class='row'>
-          <div class='col-lg-6 col-lg-offset-3 comment' ng-show='showComments'>
+          <div class='col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 comment' ng-show='post.showComment'>
             <div ng-class-odd="'odd'" ng-repeat='comment in post.comments'>
               <p > {{comment.comment}} </p>
               <small> {{comment.user}}</small>
