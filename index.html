@@ -20,10 +20,10 @@
                 <input ng-model='main.search' type="text" class="form-control" placeholder="Search">
               </div>
             </form>
-            <select id='select-fix'class='form-control'>
+            <select ng-model='myOrderBy' id='select-fix'class='form-control'>
               <option disabled selected> Sort by </option>
-              <option > Votes </option>
-              <option > Title </option>
+              <option value='-vote' > Vote </option>
+              <option value='title'> Title </option>
             </select>
           </ul>
         </div>
@@ -34,7 +34,7 @@
 
 
   <div class='container'>
-      <div class="row rowFix" ng-repeat='post in (main.posts | filter:main.search) track by post.id' >
+      <div class="row rowFix" ng-repeat='post in (main.posts | filter:main.search) | orderBy:myOrderBy' >
         <div class='pull-left col-lg-3 col-md-3 col-sm-3'>
           <img ng-src="{{post.image}}" height='auto' width='100%' alt="Description" />
         </div>
@@ -43,8 +43,8 @@
           <h3> {{post.title}} |
 
             <span ng-click='main.plusVote(post)' class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-            <span> {{post.vote}}
             <span ng-click='main.minusVote(post)' class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+            <span ng-class='{red: post.vote < 0, green: post.vote > 0}'> {{post.vote}} </span>
           </h3>
           <p class='pull-right'> {{post.author}} </p>
         </div>
