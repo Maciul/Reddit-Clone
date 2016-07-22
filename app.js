@@ -30,6 +30,12 @@ app.factory('factory', [
         }
       ];
 
+      choices = [
+        {name: '-vote'},
+        {name: 'title'},
+        {name: 'date'}
+      ]
+
       function plusVote(posts) {
         if(!posts.vote) {
         posts.vote = 0;
@@ -49,6 +55,7 @@ app.factory('factory', [
 
       return {
         posts: function() { return posts },
+        choices: function() {return choices},
         plusVote: plusVote,
         minusVote: minusVote
 
@@ -61,6 +68,7 @@ app.controller("FirstControl", [
    function(f) {
      var main = this;
      main.posts = f.posts();
+     main.choices = f.choices();
      main.plusVote = f.plusVote;
      main.minusVote = f.minusVote;
    }

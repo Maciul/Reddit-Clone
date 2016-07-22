@@ -20,18 +20,16 @@
                 <input ng-model='main.search' type="text" class="form-control" placeholder="Search">
               </div>
             </form>
-            <select ng-model='myOrderBy' id='select-fix'class='form-control'>
-              <option disabled selected> Sort by </option>
-              <option value='-vote' > Vote </option>
-              <option value='title'> Title </option>
+            <select ng-model='myOrderBy'
+                    ng-init='myOrderBy=main.choices[0].name'
+                    ng-options='choice.name as choice.name for choice in main.choices'
+             id='select-fix'class='form-control'>
             </select>
           </ul>
         </div>
       </div>
     </nav>
   </header>
-
-
 
   <div class='container'>
       <div class="row rowFix" ng-repeat='post in (main.posts | filter:main.search) | orderBy:myOrderBy' >
@@ -41,7 +39,6 @@
         <div class='col-lg-9 col-md-9 col-sm-9' >
           <div class='row'>
           <h3> {{post.title}} |
-
             <span ng-click='main.plusVote(post)' class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
             <span ng-click='main.minusVote(post)' class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
             <span ng-class='{red: post.vote < 0, green: post.vote > 0}'> {{post.vote}} </span>
@@ -58,7 +55,5 @@
       </div>
     </div>
   </div>
-
-
 </body>
 </html>
