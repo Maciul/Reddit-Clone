@@ -11,7 +11,12 @@ app.factory('factory', [
           author: 'Pawel Maciulewski',
           description: 'Lorem ipsum dolor sit amet, vero vocent principes id nec, et nemore accumsan rationibus eos, ne sed virtute utroque. Atqui quodsi laboramus eos ei, sit at sanctus nusquam. No vocent hendrerit mea, graeci interpretaris at cum. Et per elit graeci eloquentiam, ullum errem principes his ex. Corrumpit abhorreant in vix, an vero errem quo. Duo cu platonem gloriatur, vis primis viderer ad.',
           date: new Date(),
-          vote: 0
+          vote: 0,
+          comments: [
+            {comment: 'Oh Hello from the world', user: 'Bradford'},
+            {comment: 'Jigga what, I am the queen B', user: 'Heather'},
+            {comment: 'Hey guys look at me ', user: 'Alex'}
+          ]
         },
         {
           id: ++counter,
@@ -20,7 +25,10 @@ app.factory('factory', [
           author: 'Sara Rodriguez',
           description: 'Lorem ipsum dolor sit amet, vero vocent principes id nec, et nemore accumsan rationibus eos, ne sed virtute utroque. Atqui quodsi laboramus eos ei, sit at sanctus nusquam. No vocent hendrerit mea, graeci interpretaris at cum. Et per elit graeci eloquentiam, ullum errem principes his ex. Corrumpit abhorreant in vix, an vero errem quo. Duo cu platonem gloriatur, vis primis viderer ad.',
           date: new Date(),
-          vote: 0
+          vote: 0,
+          comments: [
+            {comment: 'This place is amazing', user: 'Pawel'}
+          ]
         },
         {
           id: ++counter,
@@ -29,7 +37,8 @@ app.factory('factory', [
           author: 'Rick Van Der Van',
           description: 'Lorem ipsum dolor sit amet, vero vocent principes id nec, et nemore accumsan rationibus eos, ne sed virtute utroque. Atqui quodsi laboramus eos ei, sit at sanctus nusquam. No vocent hendrerit mea, graeci interpretaris at cum. Et per elit graeci eloquentiam, ullum errem principes his ex. Corrumpit abhorreant in vix, an vero errem quo. Duo cu platonem gloriatur, vis primis viderer ad.',
           date: new Date(),
-          vote: 0
+          vote: 0,
+          comments: []
         }
       ];
 
@@ -40,21 +49,13 @@ app.factory('factory', [
       ]
 
       function plusVote(posts) {
-        if(!posts.vote) {
-        posts.vote = 0;
-        posts.vote += 1;
-      } else {
         posts.vote += 1;
       }
-    }
+
     function minusVote(posts) {
-      if(!posts.vote) {
-      posts.vote = 0;
-      posts.vote -= 1;
-    } else {
       posts.vote -= 1;
     }
-  }
+
 
   function addNewPost(form) {
     console.log(form);
@@ -64,8 +65,18 @@ app.factory('factory', [
         image: form.image,
         author: form.author,
         description: form.description,
-        date: new Date()
+        date: new Date(),
+        vote: 0,
+        comments: []
        });
+    }
+
+    function addNewComment(form, post) {
+      console.log(form)
+      post.comments.push({
+        comment: form.comment,
+        user: form.user
+      });
     }
 
       return {
@@ -73,7 +84,8 @@ app.factory('factory', [
         choices: function() {return choices},
         plusVote: plusVote,
         minusVote: minusVote,
-        addNewPost: addNewPost
+        addNewPost: addNewPost,
+        addNewComment: addNewComment
       };
     }
 ]);
@@ -87,5 +99,6 @@ app.controller("FirstControl", [
      main.plusVote = f.plusVote;
      main.minusVote = f.minusVote;
      main.addNewPost = f.addNewPost;
+     main.addNewComment = f.addNewComment;
    }
  ]);

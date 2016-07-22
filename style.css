@@ -59,3 +59,13 @@ h3 {
 .green {
   color: green;
 }
+
+.comment {
+  margin-top: 30px;
+}
+
+.odd {
+  background-color: #d8dff0;
+  padding: 5px;
+  margin: 5px 0px;
+}
