@@ -2,6 +2,17 @@ body {
   padding-top: 70px;
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
+a:hover {
+  text-decoration: none;
+  color: lighten(#333, 50%);
+}
+
+
 #select-fix {
   width: auto;
   align-items: center;
