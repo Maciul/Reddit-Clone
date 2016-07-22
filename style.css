@@ -24,6 +24,23 @@ h3 {
   border-radius: 5px;
   border: 1px solid grey;
 }
+
+.rowForm {
+  width: 50%;
+  margin-top: 3%;
+  background-color: aliceblue;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #9a9292;
+}
+
+.row-9-Fix {
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .red {
   color: red;
 }
